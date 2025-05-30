@@ -1,0 +1,3 @@
+<template>
+  Post Job
+</template>

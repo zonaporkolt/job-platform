@@ -1,0 +1,3 @@
+<template>
+  Job Search
+</template>
