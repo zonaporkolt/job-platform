@@ -1,7 +1,7 @@
 import type { User } from '@/types/user'
 
-const JOB_PORTAL_JOBS_KEY = 'jobs'
-const JOB_PORTAL_USERS_KEY = 'users'
+export const JOB_PORTAL_JOBS_KEY = 'jobs'
+export const JOB_PORTAL_USERS_KEY = 'users'
 
 const dummyUsers: User[] = [
   {
