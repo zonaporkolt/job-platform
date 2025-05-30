@@ -1,3 +1,17 @@
+<script setup lang="ts">
+import { useRouter } from 'vue-router'
+import { Button } from '@/components/ui/button'
+import { useCurrentUser } from '@/composables/useCurrentUser'
+
+const router = useRouter()
+const { user, logout } = useCurrentUser()
+
+function handleSignOut() {
+  logout()
+  router.push('/')
+}
+</script>
+
 <template>
   <div
     id="app"
@@ -8,13 +22,16 @@
         <img src="/logo.svg" alt="Logo" class="h-10 w-10 md:h-16 md:w-16">
         Job Portal
       </h1>
-      <nav>
+      <nav v-if="user">
         <RouterLink
-          to="/"
-          class="text-sm md:text-base font-medium"
+          to="/dashboard"
+          class="text-sm md:text-base font-medium mr-4"
         >
           Home
         </RouterLink>
+        <Button @click="handleSignOut">
+          Sign Out
+        </Button>
       </nav>
     </header>
 
