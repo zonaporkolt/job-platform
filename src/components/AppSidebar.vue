@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { CirclePlus, Home, Search } from 'lucide-vue-next'
+import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { Button } from '@/components/ui/button'
+
 import {
   Sidebar,
   SidebarContent,
@@ -13,7 +15,6 @@ import {
   SidebarMenuItem,
   SidebarProvider,
 } from '@/components/ui/sidebar'
-
 import { useCurrentUser } from '@/composables/useCurrentUser'
 
 const router = useRouter()
@@ -23,6 +24,33 @@ function handleSignOut() {
   logout()
   router.push('/')
 }
+
+const menuItems = [
+  {
+    to: '/dashboard',
+    icon: Home,
+    label: 'Dashboard',
+    show: true,
+  },
+  {
+    to: '/jobs',
+    icon: Search,
+    label: 'Jobs',
+    show: true,
+  },
+  {
+    to: '/post-job',
+    icon: CirclePlus,
+    label: 'Add Job',
+    show: () => isEmployer.value,
+  },
+]
+
+const visibleMenuItems = computed(() => {
+  return menuItems.filter(item =>
+    typeof item.show === 'function' ? item.show() : item.show,
+  )
+})
 </script>
 
 <template>
@@ -38,27 +66,14 @@ function handleSignOut() {
       <SidebarContent class="p-3">
         <SidebarGroup>
           <SidebarMenu>
-            <SidebarMenuItem>
+            <SidebarMenuItem
+              v-for="item in visibleMenuItems"
+              :key="item.to"
+            >
               <SidebarMenuButton as-child>
-                <RouterLink to="/dashboard">
-                  <Home />
-                  <span>Dashboard</span>
-                </RouterLink>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-              <SidebarMenuButton as-child>
-                <RouterLink to="/jobs">
-                  <Search />
-                  <span>Jobs</span>
-                </RouterLink>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem v-if="isEmployer">
-              <SidebarMenuButton as-child>
-                <RouterLink to="/post-job">
-                  <CirclePlus />
-                  <span>Add Job</span>
+                <RouterLink :to="item.to">
+                  <component :is="item.icon" />
+                  <span>{{ item.label }}</span>
                 </RouterLink>
               </SidebarMenuButton>
             </SidebarMenuItem>
