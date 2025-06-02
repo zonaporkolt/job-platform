@@ -14,5 +14,9 @@ export function useCurrentUser() {
     user.value = null
   }
 
-  return { user, setUser, logout }
+  function isEmployer() {
+    return user.value?.type === 'employer'
+  }
+
+  return { user, setUser, logout, isEmployer }
 }
