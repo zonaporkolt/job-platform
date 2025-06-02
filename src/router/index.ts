@@ -9,7 +9,7 @@ const router = createRouter({
   routes,
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, _, next) => {
   const user = getCurrentUser()
   if (to.meta.requiresAuth) {
     if (!user) {
