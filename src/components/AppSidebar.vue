@@ -17,7 +17,6 @@ import {
 import { useCurrentUser } from '@/composables/useCurrentUser'
 
 const router = useRouter()
-
 const { logout, isEmployer } = useCurrentUser()
 
 function handleSignOut() {
@@ -49,13 +48,13 @@ function handleSignOut() {
             </SidebarMenuItem>
             <SidebarMenuItem>
               <SidebarMenuButton as-child>
-                <RouterLink to="/job-search">
+                <RouterLink to="/jobs">
                   <Search />
                   <span>Jobs</span>
                 </RouterLink>
               </SidebarMenuButton>
             </SidebarMenuItem>
-            <SidebarMenuItem v-if="isEmployer()">
+            <SidebarMenuItem v-if="isEmployer">
               <SidebarMenuButton as-child>
                 <RouterLink to="/post-job">
                   <CirclePlus />
